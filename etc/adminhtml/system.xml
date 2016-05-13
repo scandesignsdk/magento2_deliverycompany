@@ -419,6 +419,137 @@
                 </field>
 
             </group>
+            <group id="deliverycompany_4" translate="label" type="text" sortOrder="540" showInDefault="1" showInWebsite="1" showInStore="1">
+                <label>Delivery company 4</label>
+
+                <field id="active" translate="label" type="select" sortOrder="10" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enabled</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="name" translate="label" type="text" sortOrder="20" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Method Name</label>
+                </field>
+
+                <field id="title" translate="label" type="text" sortOrder="30" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Title</label>
+                </field>
+
+                <field id="price" translate="label" type="text" sortOrder="40" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Price</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                </field>
+
+                <field id="use_maxweight" translate="label" type="select" sortOrder="50" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable weight check</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="maxweight" translate="label" type="text" sortOrder="52" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Max weight</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                    <depends>
+                        <field id="use_maxweight">1</field>
+                    </depends>
+                </field>
+
+                <field id="use_maxcubicmeters" translate="label" type="select" sortOrder="60" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable size check</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="maxcubicmeters" translate="label" type="text" sortOrder="62" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Max cubicmeters</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                    <depends>
+                        <field id="use_maxcubicmeters">1</field>
+                    </depends>
+                </field>
+
+                <field id="width_maxcubicmeters" translate="label" type="text" sortOrder="64" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product width attribute code</label>
+                    <depends>
+                        <field id="use_maxcubicmeters">1</field>
+                    </depends>
+                </field>
+
+                <field id="height_maxcubicmeters" translate="label" type="text" sortOrder="66" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product height attribute code</label>
+                    <depends>
+                        <field id="use_maxcubicmeters">1</field>
+                    </depends>
+                </field>
+
+                <field id="depth_maxcubicmeters" translate="label" type="text" sortOrder="68" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product depth attribute code</label>
+                    <depends>
+                        <field id="use_maxcubicmeters">1</field>
+                    </depends>
+                </field>
+
+                <field id="use_length" translate="label" type="select" sortOrder="70" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Enable length check</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="length" translate="label" type="text" sortOrder="72" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Max length</label>
+                    <validate>validate-number validate-zero-or-greater</validate>
+                    <depends>
+                        <field id="use_length">1</field>
+                    </depends>
+                </field>
+
+                <field id="length_length" translate="label" type="text" sortOrder="74" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Product length attribute code</label>
+                    <depends>
+                        <field id="use_length">1</field>
+                    </depends>
+                </field>
+
+                <field id="sallowspecific" translate="label" type="select" sortOrder="80" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Ship to Applicable Countries</label>
+                    <frontend_class>shipping-applicable-country</frontend_class>
+                    <source_model>Magento\Shipping\Model\Config\Source\Allspecificcountries</source_model>
+                </field>
+
+                <field id="specificcountry" translate="label" type="multiselect" sortOrder="90" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Ship to Specific Countries</label>
+                    <source_model>Magento\Directory\Model\Config\Source\Country</source_model>
+                    <can_be_empty>1</can_be_empty>
+                </field>
+
+                <field id="use_specificzipcode" translate="label" type="select" sortOrder="95" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Use specific zipcode</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="specificzipcode" translate="label" type="text" sortOrder="98" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Ship to Specific zipcodes</label>
+                    <depends>
+                        <field id="use_specificzipcode">1</field>
+                    </depends>
+                </field>
+
+                <field id="showmethod" translate="label" type="select" sortOrder="100" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Show Method if Not Applicable</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+                <field id="specificerrmsg" translate="label" type="textarea" sortOrder="110" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Displayed Error Message</label>
+                </field>
+
+                <field id="sort_order" translate="label" type="text" sortOrder="120" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Sort Order</label>
+                </field>
+
+                <field id="debug" translate="label" type="select" sortOrder="130" showInDefault="1" showInWebsite="1" showInStore="1">
+                    <label>Debug</label>
+                    <source_model>Magento\Config\Model\Config\Source\Yesno</source_model>
+                </field>
+
+            </group>
         </section>
     </system>
 </config>
