@@ -188,6 +188,8 @@ abstract class AbstractDeliveryCompany extends AbstractCarrier implements Carrie
         if ($value = $item->getCustomAttribute($code)) {
             return $value->getValue();
         }
+
+        $this->debugs[] = sprintf('Product "%s" - could not find custom attribute "%s"', $item->getSku(), $code);
         return null;
     }
 
