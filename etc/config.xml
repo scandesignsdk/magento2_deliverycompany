@@ -1,0 +1,159 @@
+<?xml version="1.0"?>
+<config xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="urn:magento:module:Magento_Store:etc/config.xsd">
+    <default>
+        <carriers>
+            <deliverycompany>
+                <model>Scandesigns\DeliveryCompany\Model\Carrier\DeliveryCompany</model>
+
+                <active>0</active>
+                <name>Delivery company</name>
+                <title>Delivery company</title>
+                <price>30.00</price>
+
+                <use_maxweight>0</use_maxweight>
+                <maxweight>20</maxweight>
+
+                <use_maxcubicmeters>0</use_maxcubicmeters>
+                <maxcubicmeters>20</maxcubicmeters>
+                <width_maxcubicmeters>width</width_maxcubicmeters>
+                <height_maxcubicmeters>height</height_maxcubicmeters>
+                <depth_maxcubicmeters>depth</depth_maxcubicmeters>
+
+                <use_length>0</use_length>
+                <length>40</length>
+                <length_length>length</length_length>
+
+                <use_area>0</use_area>
+                <maxarea>40</maxarea>
+                <width_area>width</width_area>
+                <height_area>height</height_area>
+
+                <sallowspecific>0</sallowspecific>
+                <specificcountry>0</specificcountry>
+
+                <use_specificzipcode>0</use_specificzipcode>
+                <specificzipcode>2000,2100,2200</specificzipcode>
+
+                <showmethod>0</showmethod>
+                <specificerrmsg>This shipping method is not available.</specificerrmsg>
+                <sort_order>200</sort_order>
+                <debug>0</debug>
+
+            </deliverycompany>
+            <deliverycompany_2>
+                <model>Scandesigns\DeliveryCompany\Model\Carrier\DeliveryCompany2</model>
+
+                <active>0</active>
+                <name>Delivery company 2</name>
+                <title>Delivery company 2</title>
+                <price>30.00</price>
+
+                <use_maxweight>0</use_maxweight>
+                <maxweight>20</maxweight>
+
+                <use_maxcubicmeters>0</use_maxcubicmeters>
+                <maxcubicmeters>20</maxcubicmeters>
+                <width_maxcubicmeters>width</width_maxcubicmeters>
+                <height_maxcubicmeters>height</height_maxcubicmeters>
+                <depth_maxcubicmeters>depth</depth_maxcubicmeters>
+
+                <use_length>0</use_length>
+                <length>40</length>
+                <length_length>length</length_length>
+
+                <use_area>0</use_area>
+                <maxarea>40</maxarea>
+                <width_area>width</width_area>
+                <height_area>height</height_area>
+
+                <sallowspecific>0</sallowspecific>
+                <specificcountry>0</specificcountry>
+
+                <use_specificzipcode>0</use_specificzipcode>
+                <specificzipcode>2000,2100,2200</specificzipcode>
+
+                <showmethod>0</showmethod>
+                <specificerrmsg>This shipping method is not available.</specificerrmsg>
+                <sort_order>200</sort_order>
+                <debug>0</debug>
+
+            </deliverycompany_2>
+            <deliverycompany_3>
+                <model>Scandesigns\DeliveryCompany\Model\Carrier\DeliveryCompany3</model>
+
+                <active>0</active>
+                <name>Delivery company 3</name>
+                <title>Delivery company 3</title>
+                <price>30.00</price>
+
+                <use_maxweight>0</use_maxweight>
+                <maxweight>20</maxweight>
+
+                <use_maxcubicmeters>0</use_maxcubicmeters>
+                <maxcubicmeters>20</maxcubicmeters>
+                <width_maxcubicmeters>width</width_maxcubicmeters>
+                <height_maxcubicmeters>height</height_maxcubicmeters>
+                <depth_maxcubicmeters>depth</depth_maxcubicmeters>
+
+                <use_length>0</use_length>
+                <length>40</length>
+                <length_length>length</length_length>
+
+                <use_area>0</use_area>
+                <maxarea>40</maxarea>
+                <width_area>width</width_area>
+                <height_area>height</height_area>
+
+                <sallowspecific>0</sallowspecific>
+                <specificcountry>0</specificcountry>
+
+                <use_specificzipcode>0</use_specificzipcode>
+                <specificzipcode>2000,2100,2200</specificzipcode>
+
+                <showmethod>0</showmethod>
+                <specificerrmsg>This shipping method is not available.</specificerrmsg>
+                <sort_order>200</sort_order>
+                <debug>0</debug>
+
+            </deliverycompany_3>
+            <deliverycompany_4>
+                <model>Scandesigns\DeliveryCompany\Model\Carrier\DeliveryCompany4</model>
+
+                <active>0</active>
+                <name>Delivery company 4</name>
+                <title>Delivery company 4</title>
+                <price>30.00</price>
+
+                <use_maxweight>0</use_maxweight>
+                <maxweight>20</maxweight>
+
+                <use_maxcubicmeters>0</use_maxcubicmeters>
+                <maxcubicmeters>20</maxcubicmeters>
+                <width_maxcubicmeters>width</width_maxcubicmeters>
+                <height_maxcubicmeters>height</height_maxcubicmeters>
+                <depth_maxcubicmeters>depth</depth_maxcubicmeters>
+
+                <use_length>0</use_length>
+                <length>40</length>
+                <length_length>length</length_length>
+
+                <use_area>0</use_area>
+                <maxarea>40</maxarea>
+                <width_area>width</width_area>
+                <height_area>height</height_area>
+
+                <sallowspecific>0</sallowspecific>
+                <specificcountry>0</specificcountry>
+
+                <use_specificzipcode>0</use_specificzipcode>
+                <specificzipcode>2000,2100,2200</specificzipcode>
+
+                <showmethod>0</showmethod>
+                <specificerrmsg>This shipping method is not available.</specificerrmsg>
+                <sort_order>200</sort_order>
+                <debug>0</debug>
+
+            </deliverycompany_4>
+        </carriers>
+    </default>
+</config>
