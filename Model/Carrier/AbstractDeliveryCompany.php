@@ -54,11 +54,8 @@ abstract class AbstractDeliveryCompany extends AbstractCarrier implements Carrie
      */
     public function getAllowedMethods()
     {
-        /** @var AbstractDeliveryCompany $caller */
-        $caller = get_called_class();
-        $this->_logger->warning($caller->_code);
         return [
-            $caller->_code => __($this->getConfigData('name'))
+            $this->getCarrierCode() => __($this->getConfigData('name'))
         ];
     }
 
@@ -70,10 +67,9 @@ abstract class AbstractDeliveryCompany extends AbstractCarrier implements Carrie
      */
     public function collectRates(RateRequest $request)
     {
-
         // Module is not active
         if (! $this->getConfigFlag('active')) {
-            $this->debugs[] = 'Not active';
+            $this->addLog('Not active');
             return $this->notInUse();
         }
 
@@ -85,7 +81,7 @@ abstract class AbstractDeliveryCompany extends AbstractCarrier implements Carrie
             }
 
             if (! in_array($request->getDestCountryId(), $countries)) {
-                $this->debugs[] = sprintf('Allowed countries %s - Chosen: %s', explode(', ', $countries), $request->getDestCountryId());
+                $this->addLog(sprintf('Allowed countries %s - Chosen: %s', explode(', ', $countries), $request->getDestCountryId()));
                 return $this->notInUse();
             }
         }
@@ -100,7 +96,7 @@ abstract class AbstractDeliveryCompany extends AbstractCarrier implements Carrie
             }
 
             if (! in_array($request->getDestPostcode(), $zipcodes)) {
-                $this->debugs[] = sprintf('Allowed zipcodes %s - Chosen: %s', explode(', ', $zipcodes), $request->getDestPostcode());
+                $this->addLog(sprintf('Allowed zipcodes %s - Chosen: %s', explode(', ', $zipcodes), $request->getDestPostcode()));
                 return $this->notInUse();
             }
 
@@ -113,6 +109,7 @@ abstract class AbstractDeliveryCompany extends AbstractCarrier implements Carrie
             /* @var $item Item */
             $qty = $item->getTotalQty();
 
+            // Weight check
             if ($this->getConfigFlag('use_maxweight')) {
                 $totalWeight += ($item->getWeight() * $qty);
             }
@@ -122,19 +119,27 @@ abstract class AbstractDeliveryCompany extends AbstractCarrier implements Carrie
                 $max_area = $this->getConfigData('area');
                 $width = $this->getItemAttribute('width_area', $item);
                 $height = $this->getItemAttribute('height_area', $item);
-                $area = ($width * 2) + ($height * 2);
-                if ( $area > $max_area ) {
-                    $this->debugs[] = sprintf('%s product area is %s, max is %s', $item->getSku(), $area, $max_area);
-                    return $this->notInUse();
+                if ($width && $height) {
+                    $area = ($width * 2) + ($height * 2);
+                    if ($area > $max_area) {
+                        $this->addLog(sprintf('%s product area is %s, max is %s', $item->getSku(), $area, $max_area));
+                        return $this->notInUse();
+                    }
+                } else {
+                    $this->addLog(sprintf('Width and Height not found for product', $item->getSku()));
                 }
             }
 
             // Length check
             if ($this->getConfigFlag('use_length')) {
                 $length = $this->getItemAttribute($this->getConfigData('length_length'), $item);
-                if ($length > $this->getConfigData('length')) {
-                    $this->debugs[] = sprintf('%s product is %s long, max is %s', $item->getSku(), $length, $this->getConfigData('length'));
-                    return $this->notInUse();
+                if ($length) {
+                    if ($length > $this->getConfigData('length')) {
+                        $this->addLog(sprintf('%s product is %s long, max is %s', $item->getSku(), $length, $this->getConfigData('length')));
+                        return $this->notInUse();
+                    }
+                } else {
+                    $this->addLog(sprintf('Length not found for product "%s"', $item->getSku()));
                 }
             }
 
@@ -143,20 +148,24 @@ abstract class AbstractDeliveryCompany extends AbstractCarrier implements Carrie
                 $width = $this->getItemAttribute($this->getConfigData('width_maxcubicmeters'), $item);
                 $height = $this->getItemAttribute($this->getConfigData('height_maxcubicmeters'), $item);
                 $depth = $this->getItemAttribute($this->getConfigData('depth_maxcubicmeters'), $item);
-                $totalCubmicmeters += ($height * $width * $depth) * $qty;
+                if ($width && $height && $depth) {
+                    $totalCubmicmeters += ($height * $width * $depth) * $qty;
+                } else {
+                    $this->addLog(sprintf('Width, Height and Depth not found for product', $item->getSku()));
+                }
             }
         }
 
         if ($this->getConfigFlag('use_maxweight')) {
             if ($totalWeight > $this->getConfigData('maxweight')) {
-                $this->debugs[] = sprintf('Total weight is %s max is %s', $totalWeight, $this->getConfigData('maxweight'));
+                $this->addLog(sprintf('Total weight is %s max is %s', $totalWeight, $this->getConfigData('maxweight')));
                 return $this->notInUse();
             }
         }
 
         if ($this->getConfigFlag('use_maxcubicmeters')) {
             if ($totalCubmicmeters > $this->getConfigData('maxcubicmeters')) {
-                $this->debugs[] = sprintf('Total cubmicmeters is %s max is %s', $totalCubmicmeters, $this->getConfigData('maxcubicmeters'));
+                $this->addLog(sprintf('Total cubmicmeters is %s max is %s', $totalCubmicmeters, $this->getConfigData('maxcubicmeters')));
                 return $this->notInUse();
             }
         }
@@ -189,16 +198,19 @@ abstract class AbstractDeliveryCompany extends AbstractCarrier implements Carrie
             return $value->getValue();
         }
 
-        $this->debugs[] = sprintf('Product "%s" - could not find custom attribute "%s"', $item->getSku(), $code);
+        $this->addLog(sprintf('Product "%s" - could not find custom attribute "%s"', $item->getSku(), $code));
         return null;
+    }
+
+    private function addLog($msg)
+    {
+        $this->_logger->debug($msg);
     }
 
     private function notInUse()
     {
-        if ($this->getConfigFlag('debug')) {
-            foreach($this->debugs as $debug) {
-                $this->_logger->debug($debug);
-            }
+        foreach($this->debugs as $debug) {
+            $this->_logger->debug($debug);
         }
 
         return false;
