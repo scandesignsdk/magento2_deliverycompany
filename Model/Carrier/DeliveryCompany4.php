@@ -1,7 +1,7 @@
 <?php
 namespace Scandesigns\DeliveryCompany\Model\Carrier;
 
-class DeliveryCompany3 extends AbstractDeliveryCompany
+class DeliveryCompany4 extends AbstractDeliveryCompany
 {
 
     protected $_code = 'deliverycompany_4';
