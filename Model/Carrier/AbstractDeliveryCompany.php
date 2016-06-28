@@ -29,6 +29,11 @@ abstract class AbstractDeliveryCompany extends AbstractCarrier implements Carrie
      */
     private $debugs = [];
 
+    /**
+     * @var \PDO
+     */
+    static private $db;
+
     public function __construct(
         ScopeConfigInterface $scopeConfig,
         ErrorFactory $rateErrorFactory,
@@ -194,8 +199,21 @@ abstract class AbstractDeliveryCompany extends AbstractCarrier implements Carrie
      */
     private function getItemAttribute($code, Item $item)
     {
-        if ($value = $item->getCustomAttribute($code)) {
-            return $value->getValue();
+        if ($ids = $item->getCustomAttribute('option_ids')) {
+            $option = $this->getSingleRow(
+                'SELECT option_id FROM catalog_product_option_title WHERE option_id IN (:ids) AND title = ":code" LIMIT 1',
+                [
+                    'ids' => implode(',', $ids),
+                    'code' => $code
+                ]
+            );
+
+            return $this->getSingleRow(
+                'SELECT `value` FROM quote_item_option WHERE code = :option',
+                [
+                    'option' => $option
+                ]
+            );
         }
 
         $this->addLog(sprintf('Product "%s" - could not find custom attribute "%s"', $item->getSku(), $code));
@@ -204,7 +222,9 @@ abstract class AbstractDeliveryCompany extends AbstractCarrier implements Carrie
 
     private function addLog($msg)
     {
-        $this->_logger->debug($msg);
+        if ($this->getConfigFlag('debug')) {
+            $this->_logger->debug($msg);
+        }
     }
 
     private function notInUse()
@@ -214,6 +234,33 @@ abstract class AbstractDeliveryCompany extends AbstractCarrier implements Carrie
         }
 
         return false;
+    }
+
+    private function getSingleRow($query, array $values = [])
+    {
+        $stmt = $this->getPDO()->prepare($query);
+        $stmt->execute($values);
+        return $stmt->fetchColumn();
+    }
+
+    private function getPDO()
+    {
+        if (! self::$db) {
+            $config = include BP . '/app/etc/env.php';
+            $dsn = sprintf(
+                'mysql:dbname=%s;host=%s',
+                $config['db']['connection']['default']['dbname'],
+                $config['db']['connection']['default']['host']
+            );
+
+            self::$db = new \PDO(
+                $dsn,
+                $config['db']['connection']['default']['username'],
+                $config['db']['connection']['default']['password']
+            );
+        }
+
+        return self::$db;
     }
 
 }
